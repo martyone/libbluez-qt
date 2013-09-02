@@ -16,6 +16,7 @@ PkgConfigBR:
     - Qt5Gui
     - Qt5DBus
     - Qt5Qml
+    - Qt5Test
     - dbus-1
 Configure: none
 Builder: qmake5
@@ -36,3 +37,9 @@ SubPackages:
    Description: |
     This package contains the files necessary to develop
     applications using qt to access bluetooth devices using bluez
+ - Name: tests
+   Summary: Test suite for libbluez-qt5
+   Group: System/GUI/Other
+   Description: "%{summary}."
+   Files:
+       - "/opt/tests/libbluez-qt5/*"

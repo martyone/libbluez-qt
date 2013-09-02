@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<testdefinition version="0.1">
+
+    <suite name="libbluez-qt">
+
+        <set name="libbluez-qt5">
+
+            <description>libbluez-qt5 tests</description>
+
+            <case name="ut_device">
+                <description>Tests the BluetoothDevice class</description>
+                <step>/opt/tests/libbluez-qt5/ut_device</step>
+            </case>
+
+            <case name="ut_agent">
+                <description>Tests org.bluez.Agent related classes</description>
+                <step>/opt/tests/libbluez-qt5/ut_agent</step>
+            </case>
+
+            <case name="ut_bluetoothdevicesmodel">
+                <description>Tests the BluetoothDevicesModel class</description>
+                <step>/opt/tests/libbluez-qt5/ut_bluetoothdevicesmodel</step>
+            </case>
+
+            <case name="ut_nearbydevicesmodel">
+                <description>Tests the NearbyDevicesModel class</description>
+                <step>/opt/tests/libbluez-qt5/ut_nearbydevicesmodel</step>
+            </case>
+
+        </set>
+
+    </suite>
+
+</testdefinition>
