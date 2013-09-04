@@ -123,7 +123,6 @@ void NearbyDevicesModel::setAdapterProperty(QString name, QVariant value)
 
 void NearbyDevicesModel::deviceCreated(QString hwaddy, QVariantMap properties)
 {
-	bool found = false;
 	foreach(NearbyItem* path, devices)
 	{
 		if(path->address() == hwaddy)

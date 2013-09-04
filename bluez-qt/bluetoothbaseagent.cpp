@@ -53,6 +53,7 @@ void BluetoothBaseAgent::confirmModeChange(QString mode)
 
 void BluetoothBaseAgent::displayPasskey(OrgBluezDeviceInterface &device, uint key, uint entered)
 {
+	Q_UNUSED(entered);
 	qDebug()<<"display key "<<device.path()<<" "<<key;
 
 	///create and return back an empty reply:

@@ -108,6 +108,7 @@ void ObexFtp::finishedConnecting(QDBusPendingCallWatcher* call)
 
 void ObexFtp::Complete(const QDBusObjectPath &path)
 {
+	Q_UNUSED(path);
 	emit transferComplete();
 }
 
