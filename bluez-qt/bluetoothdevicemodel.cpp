@@ -18,9 +18,10 @@ BluetoothDevicesModel::BluetoothDevicesModel(QObject *parent) :
 			"org.bluez",
 			"/", QDBusConnection::systemBus(), this);
 
-	connect(manager,SIGNAL(AdapterAdded(QDBusObjectPath)),this,SLOT(adapterAdded(QDBusObjectPath)));
+	connect(manager,SIGNAL(DefaultAdapterChanged(QDBusObjectPath)),
+			this,SLOT(defaultAdapterChanged(QDBusObjectPath)));
 	connect(manager,SIGNAL(AdapterRemoved(QDBusObjectPath)),this,SLOT(adapterRemoved(QDBusObjectPath)));
-	adapterAdded(manager->DefaultAdapter());
+	defaultAdapterChanged(manager->DefaultAdapter());
 
 	QMetaObject properties = BluetoothDevice::staticMetaObject;
 
@@ -169,21 +170,34 @@ void BluetoothDevicesModel::setDiscoverableTimeout(int timeout)
 	}
 }
 
-void BluetoothDevicesModel::adapterAdded(QDBusObjectPath path)
+void BluetoothDevicesModel::defaultAdapterChanged(QDBusObjectPath path)
 {
 	if(adapter && adapter->path() == path.path()) return;
 
-	QDBusObjectPath adapterpath = manager->DefaultAdapter();
-
-	if(adapterpath.path() == "")
+	if (adapter)
 	{
-		///we actually shouldn't ever get here.
+		beginRemoveRows(QModelIndex(), 0, m_devices.size()-1);
+		foreach(BluetoothDevice* device, m_devices)
+		{
+			updateConnected(device->connected());
+			device->deleteLater();
+		}
+		m_devices.clear();
+		endRemoveRows();
+
+		delete adapter;
+		adapter = NULL;
+		adapterChanged(false);
+	}
+
+	if(path.path() == "")
+	{
 		return;
 	}
 
 	adapter = new OrgBluezAdapterInterface(
 			"org.bluez",
-			adapterpath.path(),
+			path.path(),
 			QDBusConnection::systemBus(), this);
 
 	connect(adapter,
