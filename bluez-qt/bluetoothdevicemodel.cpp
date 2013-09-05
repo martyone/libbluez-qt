@@ -20,7 +20,7 @@ BluetoothDevicesModel::BluetoothDevicesModel(QObject *parent) :
 
 	connect(manager,SIGNAL(AdapterAdded(QDBusObjectPath)),this,SLOT(adapterAdded(QDBusObjectPath)));
 	connect(manager,SIGNAL(AdapterRemoved(QDBusObjectPath)),this,SLOT(adapterRemoved(QDBusObjectPath)));
-	adapterAdded(QDBusObjectPath());
+	adapterAdded(manager->DefaultAdapter());
 
 	QMetaObject properties = BluetoothDevice::staticMetaObject;
 
