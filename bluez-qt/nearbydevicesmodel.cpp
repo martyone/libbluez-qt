@@ -118,7 +118,7 @@ void NearbyDevicesModel::replyRequestPidCode(QString pidCode)
 
 void NearbyDevicesModel::setAdapterProperty(QString name, QVariant value)
 {
-	if(adapter) adapter->setProperty(name.toLatin1().data(),value);
+	if(adapter) adapter->SetProperty(name.toLatin1().data(),QDBusVariant(value));
 }
 
 void NearbyDevicesModel::deviceCreated(QString hwaddy, QVariantMap properties)
