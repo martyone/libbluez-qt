@@ -194,6 +194,17 @@ void NearbyDevicesModel::adapterAdded(QDBusObjectPath path)
 			SIGNAL(PropertyChanged(QString,QDBusVariant)),
 			this,
 			SLOT(adapterPropertiesChangedSlot(QString,QDBusVariant)));
+
+	QList<QDBusObjectPath> list = adapter->ListDevices();
+	foreach(QDBusObjectPath item, list)
+	{
+		OrgBluezDeviceInterface device(
+				"org.bluez",
+				item.path(),
+				QDBusConnection::systemBus(), this);
+		QVariantMap properties = device.GetProperties();
+		deviceCreated(properties["Address"].toString(), properties);
+	}
 }
 
 void NearbyDevicesModel::adapterRemoved(QDBusObjectPath)
