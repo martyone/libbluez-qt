@@ -19,9 +19,9 @@ NearbyDevicesModel::NearbyDevicesModel(QObject *parent) :
 			"org.bluez",
 			"/", QDBusConnection::systemBus(), this);
 
-	connect(manager,SIGNAL(AdapterAdded(QDBusObjectPath)),this,SLOT(adapterAdded(QDBusObjectPath)));
+	connect(manager,SIGNAL(DefaultAdapterChanged(QDBusObjectPath)),this,SLOT(defaultAdapterChanged(QDBusObjectPath)));
 	connect(manager,SIGNAL(AdapterRemoved(QDBusObjectPath)),this,SLOT(adapterRemoved(QDBusObjectPath)));
-	adapterAdded(manager->DefaultAdapter());
+	defaultAdapterChanged(manager->DefaultAdapter());
 
 	QMetaObject properties = NearbyItem::staticMetaObject;
 	for(int i=0; i<properties.propertyCount();i++)
@@ -173,18 +173,23 @@ void NearbyDevicesModel::deviceRemoved(QString hwaddy)
 	}
 }
 
-void NearbyDevicesModel::adapterAdded(QDBusObjectPath path)
+void NearbyDevicesModel::defaultAdapterChanged(QDBusObjectPath path)
 {
 	if(adapter && adapter->path() == path.path()) return;
 
-	QDBusObjectPath adapterpath = manager->DefaultAdapter();
+	if (adapter)
+	{
+		removeAll(true);
+		delete adapter;
+		adapter = NULL;
+	}
 
-	if(adapterpath.path() == "")
+	if(path.path() == "")
 		return;
 
 	adapter = new OrgBluezAdapterInterface(
 			"org.bluez",
-			adapterpath.path(),
+			path.path(),
 			QDBusConnection::systemBus(), this);
 
 	connect(adapter,

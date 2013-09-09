@@ -94,7 +94,7 @@ protected:
 #endif
 
 private slots:
-	void adapterAdded(QDBusObjectPath);
+	void defaultAdapterChanged(QDBusObjectPath);
 	void adapterRemoved(QDBusObjectPath);
 	void deviceCreated(QString hwaddy, QVariantMap properties);
 	void deviceRemoved(QString hwaddy);
