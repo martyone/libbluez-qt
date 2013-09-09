@@ -21,7 +21,7 @@ NearbyDevicesModel::NearbyDevicesModel(QObject *parent) :
 
 	connect(manager,SIGNAL(AdapterAdded(QDBusObjectPath)),this,SLOT(adapterAdded(QDBusObjectPath)));
 	connect(manager,SIGNAL(AdapterRemoved(QDBusObjectPath)),this,SLOT(adapterRemoved(QDBusObjectPath)));
-	adapterAdded(QDBusObjectPath());
+	adapterAdded(manager->DefaultAdapter());
 
 	QMetaObject properties = NearbyItem::staticMetaObject;
 	for(int i=0; i<properties.propertyCount();i++)
