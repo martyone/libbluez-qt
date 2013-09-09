@@ -94,10 +94,14 @@ void NearbyDevicesModel::discover(bool start)
 
 void NearbyDevicesModel::removeAll(bool)
 {
-	for(int i=0;i<devices.size();i++)
+	beginRemoveRows(QModelIndex(), 0, devices.size()-1);
+	while(!devices.isEmpty())
 	{
-		devices.removeAt(i);
+		NearbyItem *item = devices.takeFirst();
+		emit nearbyDeviceRemoved(0);
+		delete item;
 	}
+	endRemoveRows();
 }
 
 void NearbyDevicesModel::replyRequestConfirmation(bool confirmed)
@@ -161,9 +165,10 @@ void NearbyDevicesModel::deviceRemoved(QString hwaddy)
 			qDebug()<<"device "<<device->name()<<" has disappeared";
 			int i=devices.indexOf(device);
 			beginRemoveRows(QModelIndex(),i,i);
-			devices.removeAt(i);
+			NearbyItem *item = devices.takeAt(i);
 			emit nearbyDeviceRemoved(i);
 			endRemoveRows();
+			delete item;
 		}
 	}
 }
