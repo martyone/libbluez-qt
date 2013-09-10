@@ -6,6 +6,7 @@ SUBDIRS = \
         ut_agent.pro \
         ut_bluetoothdevicesmodel.pro \
         ut_nearbydevicesmodel.pro \
+        ut_obexftp.pro \
 
 tests_xml.path = $${INSTALL_TESTDIR}
 tests_xml.files = tests.xml

@@ -27,6 +27,11 @@
                 <step>/opt/tests/libbluez-qt5/ut_nearbydevicesmodel</step>
             </case>
 
+            <case name="ut_obexftp">
+                <description>Tests the ObexFtp class</description>
+                <step>/opt/tests/libbluez-qt5/ut_obexftp</step>
+            </case>
+
         </set>
 
     </suite>
