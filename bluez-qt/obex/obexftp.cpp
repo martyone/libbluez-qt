@@ -95,7 +95,8 @@ void ObexFtp::finishedConnecting(QDBusPendingCallWatcher* call)
 	if(agent) delete agent;
 	agent = new ObexAgentAdaptor(this);
 
-	QDBusConnection::sessionBus().registerObject(sessionPath.path(), agent);
+	QDBusConnection::sessionBus().registerObject(sessionPath.path(), agent,
+			QDBusConnection::ExportAllContents);
 	m_session->AssignAgent(sessionPath);
 
 	if(m_ftp) m_ftp->deleteLater();
